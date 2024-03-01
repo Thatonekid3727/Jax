@@ -1,0 +1,41 @@
+import random
+
+class Giant:
+    def __init__(self, name, health):
+        self.name = name
+        self.health = health
+
+    def take_damage(self, damage):
+        self.health -= damage
+
+    def is_alive(self):
+        return self.health > 0
+
+class WillyWonka:
+    def __init__(self, name, damage):
+        self.name = name
+        self.damage = damage
+
+    def attack(self, target):
+        damage = random.randint(1, self.damage)
+        print(f"{self.name} hits {target.name} for {damage} damage!")
+        target.take_damage(damage)
+
+def main():
+    willy_wonka = WillyWonka("Willy Wonka", 20)
+    giant = Giant("Giant", 100)
+
+    print("Willy Wonka enters the arena to fight the giant!")
+
+    while willy_wonka.is_alive() and giant.is_alive():
+        willy_wonka.attack(giant)
+        if not giant.is_alive():
+            print("The giant falls defeated! Congratulations, Willy Wonka!")
+            break
+        giant.attack(willy_wonka)
+        if not willy_wonka.is_alive():
+            print("Willy Wonka has been defeated by the giant. Game over!")
+            break
+
+if __name__ == "__main__":
+    main()
